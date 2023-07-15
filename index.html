@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>English Language Quiz</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            margin-bottom: 24px;
+            color: #00bfa5;
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .emoji {
+            font-size: 48px;
+            margin-top: 8px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 32px;
+        }
+
+        .options button {
+            margin-bottom: 16px;
+            padding: 12px 32px;
+            background-color: #00bfa5;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .options button:hover {
+            background-color: #027c6b;
+        }
+
+        .score {
+            font-weight: bold;
+            margin-top: 32px;
+            text-align: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        .character {
+            width: 200px;
+            height: 200px;
+            background-image: url('character.png'); /* Replace with your character image */
+            background-size: cover;
+            margin-left: 24px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .intro-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #00bfa5, rgb(0, 175, 152));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .logo {
+            max-width: 200px;
+            max-height: 200px;
+        }
+
+        .intro-section.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="intro-section">
+        <img src="your-logo.png" alt="Logo" class="logo">
+    </div>
+    <Script>
+        // Function to hide the intro section after a certain duration
+        function hideIntroSection() {
+            const introSection = document.querySelector('.intro-section');
+            introSection.classList.add('hide');
+        }
+
+        // Hide the intro section after 5 seconds (5000 milliseconds)
+        setTimeout(hideIntroSection, 5000);
+
+    </Script>
+    <div class="container">
+        <h1>English Language Quiz</h1>
+        <div class="question">
+            <p id="questionText">What is the opposite of the word "happy"?</p>
+            <p class="emoji">&#x1F60A;</p>
+        </div>
+        <div class="options">
+            <button onclick="checkAnswer('a')">Sad</button>
+            <button onclick="checkAnswer('b')">Angry</button>
+            <button onclick="checkAnswer('c')">Excited</button>
+            <button onclick="checkAnswer('d')">Confused</button>
+        </div>
+        <p id="scoreText" class="score"></p>
+    </div>
+
+    <div class="character"></div>
+
+    <script>
+        const levels = [
+            {
+                level: 1,
+                questions: [
+                    {
+                        question: "What is the opposite of the word 'happy'?",
+                        emoji: "&#x1F60A;",
+                        options: {
+                            a: "Sad",
+                            b: "Angry",
+                            c: "Excited",
+                            d: "Confused"
+                        },
+                        answer: "a"
+                    },
+                    {
+                        question: "Choose the correct spelling: 'experiance', 'experience', 'ekperience', 'experynce'",
+                        emoji: "&#x270F;&#xFE0F;",
+                        options: {
+                            a: "experiance",
+                            b: "experience",
+                            c: "ekperience",
+                            d: "experynce"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "Which sentence is grammatically correct? 'I goed to the store' or 'I went to the store'?",
+                        emoji: "&#x1F4D6;",
+                        options: {
+                            a: "I goed to the store",
+                            b: "I went to the store",
+                            c: "Both are correct",
+                            d: "Neither is correct"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "What is the plural form of the word 'child'?",
+                        emoji: "&#x1F476;",
+                        options: {
+                            a: "childs",
+                            b: "childes",
+                            c: "child's",
+                            d: "children"
+                        },
+                        answer: "d"
+                    },
+                    {
+                        question: "Which word is a synonym for 'beautiful'?",
+                        emoji: "&#x1F338;",
+                        options: {
+                            a: "Ugly",
+                            b: "Pretty",
+                            c: "Messy",
+                            d: "Boring"
+                        },
+                        answer: "b"
+                    }
+                ]
+            },
+            {
+                level: 2,
+                questions: [
+                    {
+                        question: "What is the correct order of the words in this sentence: 'is', 'happy', 'he'?",
+                        emoji: "&#x1F9E0;",
+                        options: {
+                            a: "He is happy",
+                            b: "Is he happy",
+                            c: "Happy he is",
+                            d: "Happy is he"
+                        },
+                        answer: "a"
+                    },
+                    {
+                        question: "Choose the correct spelling: 'recieve', 'receive', 'receeve', 'recceve'",
+                        emoji: "&#x270F;&#xFE0F;",
+                        options: {
+                            a: "recieve",
+                            b: "receive",
+                            c: "receeve",
+                            d: "recceve"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "Which sentence is grammatically correct? 'She don't like chocolate' or 'She doesn't like chocolate'?",
+                        emoji: "&#x1F382;",
+                        options: {
+                            a: "She don't like chocolate",
+                            b: "She doesn't like chocolate",
+                            c: "Both are correct",
+                            d: "Neither is correct"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "What is the plural form of the word 'mouse'?",
+                        emoji: "&#x1F401;",
+                        options: {
+                            a: "mouses",
+                            b: "mice",
+                            c: "mouse's",
+                            d: "mices"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "Which word is a synonym for 'angry'?",
+                        emoji: "&#x1F621;",
+                        options: {
+                            a: "Happy",
+                            b: "Calm",
+                            c: "Sad",
+                            d: "Furious"
+                        },
+                        answer: "d"
+                    }
+                ]
+            },
+            {
+                level: 3,
+                questions: [
+                    {
+                        question: "What is the correct order of the words in this sentence: 'tomorrow', 'meeting', 'have', 'we'?",
+                        emoji: "&#x1F4C6;",
+                        options: {
+                            a: "We have meeting tomorrow",
+                            b: "Have we meeting tomorrow",
+                            c: "Tomorrow we have meeting",
+                            d: "Meeting have we tomorrow"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Choose the correct spelling: 'seperate', 'seperate', 'separate', 'seprate'",
+                        emoji: "&#x270F;&#xFE0F;",
+                        options: {
+                            a: "seperate",
+                            b: "seperate",
+                            c: "separate",
+                            d: "seprate"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Which sentence is grammatically correct? 'They is going to the park' or 'They are going to the park'?",
+                        emoji: "&#x1F3DE;",
+                        options: {
+                            a: "They is going to the park",
+                            b: "They are going to the park",
+                            c: "Both are correct",
+                            d: "Neither is correct"
+                        },
+                        answer: "b"
+                    },
+                    {
+                        question: "What is the plural form of the word 'ox'?",
+                        emoji: "&#x1F402;",
+                        options: {
+                            a: "oxes",
+                            b: "ox's",
+                            c: "oxen",
+                            d: "oxes"
+                        },
+                        answer: "c"
+                    },
+                    {
+                        question: "Which word is a synonym for 'brave'?",
+                        emoji: "&#x1F40A;",
+                        options: {
+                            a: "Fearful",
+                            b: "Timid",
+                            c: "Courageous",
+                            d: "Lazy"
+                        },
+                        answer: "c"
+                    }
+                ]
+            }
+        ];
+
+        let currentLevelIndex = 0;
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function displayQuestion() {
+            const currentLevel = levels[currentLevelIndex];
+            const currentQuestion = currentLevel.questions[currentQuestionIndex];
+
+            const questionText = document.getElementById("questionText");
+            questionText.innerHTML = currentQuestion.question;
+
+            const emoji = document.querySelector(".emoji");
+            emoji.innerHTML = currentQuestion.emoji;
+
+            const optionsContainer = document.querySelector(".options");
+            optionsContainer.innerHTML = "";
+
+            for (const option in currentQuestion.options) {
+                const button = document.createElement("button");
+                button.textContent = currentQuestion.options[option];
+                button.setAttribute("onclick", `checkAnswer('${option}')`);
+                optionsContainer.appendChild(button);
+            }
+        }
+
+        function checkAnswer(selectedOption) {
+            const currentLevel = levels[currentLevelIndex];
+            const currentQuestion = currentLevel.questions[currentQuestionIndex];
+
+            if (selectedOption === currentQuestion.answer) {
+                score++;
+            }
+
+            if (currentQuestionIndex < currentLevel.questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                if (currentLevelIndex < levels.length - 1) {
+                    const continueLearning = confirm("Congratulations! You completed Level " + currentLevel.level + ". Do you want to continue learning English?");
+                    if (continueLearning) {
+                        currentQuestionIndex = 0;
+                        currentLevelIndex++;
+                        displayQuestion();
+                    } else {
+                        showScore();
+                    }
+                } else {
+                    showScore();
+                }
+            }
+        }
+
+        function showScore() {
+            const container = document.querySelector(".container");
+            const scoreText = document.getElementById("scoreText");
+            scoreText.textContent = "Quiz Completed!\nYour score: " + score + " out of " + getTotalQuestionsCount();
+            scoreText.style.display = "block";
+        }
+
+        function getTotalQuestionsCount() {
+            let totalQuestionsCount = 0;
+            for (const level of levels) {
+                totalQuestionsCount += level.questions.length;
+            }
+            return totalQuestionsCount;
+        }
+
+        displayQuestion();
+    </script>
+</body>
+
+</html>
